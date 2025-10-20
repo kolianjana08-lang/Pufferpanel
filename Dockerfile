@@ -8,20 +8,20 @@ RUN curl -fsSL https://packagecloud.io/pufferpanel/pufferpanel/gpgkey | gpg --de
     echo "deb [signed-by=/usr/share/keyrings/pufferpanel-archive-keyring.gpg] https://packagecloud.io/pufferpanel/pufferpanel/ubuntu/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/pufferpanel.list && \
     apt update && apt install -y pufferpanel
 
-# Create data directories
+# Create required directories
 RUN mkdir -p /var/lib/pufferpanel/email \
     && mkdir -p /var/lib/pufferpanel/servers \
     && mkdir -p /var/lib/pufferpanel/settings
 
-# Environment variables
+# Set environment variables
 ENV PUFFERPANEL_PORT=8080
 ENV PUFFERPANEL_DATA_DIR=/var/lib/pufferpanel
 
-# Initialize PufferPanel config BEFORE first run
+# Pre-generate configuration files
 RUN pufferpanel generate
 
-# Create admin user
-RUN pufferpanel user add --email admin@example.com --password admin123 --name Admin
+# Create admin user (replace with your test credentials)
+RUN pufferpanel user add --email test@example.com --password test123 --name Admin
 
 # Expose port
 EXPOSE 8080
